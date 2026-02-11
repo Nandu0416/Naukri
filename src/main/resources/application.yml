@@ -1,0 +1,18 @@
+spring:
+  application:
+    name: naukri-auto-apply
+
+automation:
+  mode: real
+  naukri:
+    login-url: https://www.naukri.com/nlogin/login
+    search-url: https://www.naukri.com/jobs-in-india
+    headless: true
+    implicit-wait-seconds: 20
+    page-load-timeout-seconds: 60
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
