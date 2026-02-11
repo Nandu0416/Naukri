@@ -7,6 +7,7 @@ import com.naukri.autoapply.domain.ApplicationRun;
 import com.naukri.autoapply.domain.JobSearchCriteria;
 import com.naukri.autoapply.domain.NaukriCredentials;
 import com.naukri.autoapply.infrastructure.ApplicationRunRepository;
+import com.naukri.autoapply.infrastructure.AutomationRunResult;
 import com.naukri.autoapply.infrastructure.NaukriAutomationClient;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -61,8 +62,9 @@ public class JobApplicationService {
             run.markRunning();
             run.addNote("Searching jobs for role '" + criteria.role() + "'.");
 
-            int submitted = automationClient.applyToMatchingJobs(credentials, criteria);
-            run.markCompleted(submitted);
+            AutomationRunResult result = automationClient.applyToMatchingJobs(credentials, criteria);
+            result.notes().forEach(run::addNote);
+            run.markCompleted(result.submittedApplications());
             run.addNote("Run completed successfully.");
         } catch (Exception ex) {
             run.markFailed("Run failed: " + ex.getMessage());

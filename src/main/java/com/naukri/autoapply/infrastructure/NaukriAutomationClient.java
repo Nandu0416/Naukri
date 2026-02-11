@@ -5,5 +5,5 @@ import com.naukri.autoapply.domain.NaukriCredentials;
 
 public interface NaukriAutomationClient {
 
-    int applyToMatchingJobs(NaukriCredentials credentials, JobSearchCriteria criteria);
+    AutomationRunResult applyToMatchingJobs(NaukriCredentials credentials, JobSearchCriteria criteria);
 }

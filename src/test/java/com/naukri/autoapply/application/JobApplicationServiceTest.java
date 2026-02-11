@@ -3,6 +3,7 @@ package com.naukri.autoapply.application;
 import com.naukri.autoapply.api.StartAutoApplyRequest;
 import com.naukri.autoapply.domain.ApplicationRunStatus;
 import com.naukri.autoapply.infrastructure.ApplicationRunRepository;
+import com.naukri.autoapply.infrastructure.AutomationRunResult;
 import com.naukri.autoapply.infrastructure.NaukriAutomationClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,7 +20,7 @@ class JobApplicationServiceTest {
     @BeforeEach
     void setUp() {
         ApplicationRunRepository repository = new ApplicationRunRepository();
-        NaukriAutomationClient client = (credentials, criteria) -> criteria.applicationsToSubmit();
+        NaukriAutomationClient client = (credentials, criteria) -> AutomationRunResult.of(criteria.applicationsToSubmit(), List.of("test run"));
         Executor sameThreadExecutor = Runnable::run;
         service = new JobApplicationService(repository, client, sameThreadExecutor);
     }
