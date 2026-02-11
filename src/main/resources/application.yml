@@ -1,0 +1,9 @@
+spring:
+  application:
+    name: naukri-auto-apply
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
